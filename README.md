@@ -3,7 +3,8 @@ TutYou
 
 Plugin for Chrome to learn new words
 
-Landing Page - bit.do/tutyou
+Landing Page - http://bit.do/tutyou
+
 Facebook - https://www.facebook.com/pages/TutYou/1736380799919616?fref=ts
 
 Плагин для браузера, который помогает расширить словарный запас, не отрывая от серфинга в сети.
