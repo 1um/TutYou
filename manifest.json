@@ -1,0 +1,38 @@
+{
+    "name": "privateTutor",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "Tutor for language learning",
+	"options_page": "options/options.html",
+    "browser_action": {
+        "default_icon": "assets/TY.png",
+        "default_popup": "popup/popup.html"
+    },
+    "permissions": [
+        "tabs",
+        "http://*/*",
+		"storage",
+        "background"
+    ],
+	"icons": {
+          "16": "assets/TY.png"
+        },
+    "content_scripts": [
+        {
+            "matches": [
+            "http://ithappens.me/*"
+            ],
+            "js": ["privateT.js"],
+            "css": ["assets/tutYou.css"],
+			"run_at": "document_end"
+        }
+    ],
+	"background": {
+		"scripts": [
+		  "background.js",
+          "assets/Snowball.min.js"
+		]
+	},
+    "web_accessible_resources": ["inject.js"]
+
+}

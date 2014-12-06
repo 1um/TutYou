@@ -1,0 +1,90 @@
+tut {
+	font-weight: bold;
+}
+
+tut.notlearned{
+ color: RGB(0, 0, 0);
+}
+
+tut.learned{
+ font-weight: bold;
+}
+
+#ns_tt{  
+    position: absolute;  
+    border: solid #AAAAAA 1px;  
+    background-color: #DDDDDD;  
+    font-family: Tahoma, sans-serif;  
+    font-size: 11px;  
+    line-height: 16px;  
+    padding: 2px 5px;  
+    overflow: hidden;  
+    margin: 25px 0px 0px 5px;  
+    }  
+
+.tutyou{
+    position: relative;
+}
+.tutyou :after {
+  content:""; 
+  background: black; 
+  position: absolute; 
+  bottom: 0; 
+  left: 0; 
+  height: 1px;
+}
+.tutyou .translation{
+    position: absolute;
+}
+
+.tutyou {outline:none; }
+.tutyou{
+    font-weight: bold;
+}
+.tutyou .translation{
+    z-index:10;
+    padding:14px 20px;
+    width:300px; 
+    line-height:16px;
+    border-radius:4px;
+    box-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px;
+    background-color: rgba(0, 0, 0, 0.44);
+    color: white;
+    width: inherit;
+    margin-top: -60px;
+    margin-left: -20px;
+    position: absolute;
+    left: 0;
+    display: none;
+}
+
+[data-percent="1"] :after {
+  width: 10%;
+}
+[data-percent="2"] :after {
+  width: 20%;
+}
+[data-percent="3"] :after {
+  width: 30%;
+}
+[data-percent="4"] :after {
+  width: 40%;
+}
+[data-percent="5"] :after {
+  width: 50%;
+}
+[data-percent="6"] :after {
+  width: 60%;
+}
+[data-percent="7"] :after {
+  width: 70%;
+}
+[data-percent="8"] :after {
+  width: 80%;
+}
+[data-percent="9"] :after {
+  width: 90%;
+}
+[data-percent="10"] :after {
+  width: 100%;
+}

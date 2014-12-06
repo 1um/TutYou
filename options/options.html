@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head><title>TutYou</title>
+<meta charset="utf-8"> 
+<link rel="stylesheet" type="text/css" href="options.css">
+<link rel="stylesheet" type="text/css" href="../assets/pure-min.css">
+<script src="../assets/jquery.js"></script>
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle -->
+    <a href="http://purecss.io/layouts/side-menu/#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+        <div class="pure-menu pure-menu-open">
+            <a class="pure-menu-heading" href="#"><img src="../assets/TutYou3.png" width="65px"></img></a>
+
+            <ul>
+                <li class="menu-item-divided pure-menu-selected"><a href="#"><img src="../assets/book_black.png" ></img></a></li>
+                <!-- <li><a href="#"><img src="../assets/settings.png" ></img></a></li> -->
+
+                <!-- <li> <a href="#"><img src="../assets/about.png" ></img></a></li> -->
+            </ul>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="header">
+            <h1>Словарик</h1>
+            <h2>Тут вы можете посмотреть статистику по добавленым словам и добавить новые</h2>
+        </div>
+
+        <div class="content">
+          <div class='added-words'>
+            <h2 class="content-subhead">Список добавленных слов</h2>
+            <div class="pure-g words-table head">
+              <div class="pure-u-1-24"> # </div>
+              <div class="pure-u-1-4"> Слово </div>
+              <div class="pure-u-1-4"> Перевод </div>
+              <div class="pure-u-5-24"> Дата добавления </div>
+              <div class="pure-u-1-12"> Счетчик </div>
+              <div class="pure-u-1-12"> Выучено </div>
+              <div class="pure-u-1-12"> Удалить </div>
+            </div>
+            <div class="pure-g words-table template">
+              <div class="pure-u-1-24 id"> <span>1</span> </div>
+              <div class="pure-u-1-4 ru-orig"> <span>1</span> </div>
+              <div class="pure-u-1-4 en-orig"> <span>2</span> </div>
+              <div class="pure-u-5-24 date">  <span>3</span> </div>
+              <div class="pure-u-1-12 counter"> <span>4</span> </div>
+              <div class="pure-u-1-12 learn-state"> <img src='../assets/star-on.png' class='learned'> <img src='../assets/star-off.png' class='not-learned'>  </div>
+              <div class="pure-u-1-12 remove"> <img src='../assets/delete.png'>  </div>
+            </div>
+          </div>
+          
+
+            
+
+            <!-- <h2 class="content-subhead">Слова для добавления</h2> -->
+            
+        </div>
+    </div>
+</div>
+
+<script src="options.js"></script>
+</body>
+</html>
