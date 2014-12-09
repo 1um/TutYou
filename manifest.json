@@ -33,6 +33,6 @@
           "assets/Snowball.min.js"
 		]
 	},
-    "web_accessible_resources": ["inject.js"]
+    "web_accessible_resources": ["inject.js","templates.html"]
 
 }

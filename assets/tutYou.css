@@ -1,31 +1,15 @@
-tut {
-	font-weight: bold;
+.TYtemplates{
+  display: none;
 }
-
-tut.notlearned{
- color: RGB(0, 0, 0);
-}
-
-tut.learned{
- font-weight: bold;
-}
-
-#ns_tt{  
-    position: absolute;  
-    border: solid #AAAAAA 1px;  
-    background-color: #DDDDDD;  
-    font-family: Tahoma, sans-serif;  
-    font-size: 11px;  
-    line-height: 16px;  
-    padding: 2px 5px;  
-    overflow: hidden;  
-    margin: 25px 0px 0px 5px;  
-    }  
-
-.tutyou{
+.TYword,.TYprogress{
     position: relative;
 }
-.tutyou :after {
+
+.TYreplacement{
+  font-weight: bold;
+}
+
+.TYprogress :after {
   content:""; 
   background: black; 
   position: absolute; 
@@ -33,30 +17,23 @@ tut.learned{
   left: 0; 
   height: 1px;
 }
-.tutyou .translation{
-    position: absolute;
-}
-
-.tutyou {outline:none; }
-.tutyou{
-    font-weight: bold;
-}
-.tutyou .translation{
+.TYword .TYoriginal{
     z-index:10;
     padding:14px 20px;
     width:300px; 
     line-height:16px;
     border-radius:4px;
-    box-shadow: rgba(0, 0, 0, 0.5) 5px 5px 8px;
-    background-color: rgba(0, 0, 0, 0.44);
-    color: white;
+    border: 2px solid black;
+    background-color: white;
+    color: black;
     width: inherit;
-    margin-top: -60px;
-    margin-left: -20px;
+    margin-top: 0px;
+    margin-left: 0px;
     position: absolute;
     left: 0;
     display: none;
 }
+
 
 [data-percent="1"] :after {
   width: 10%;

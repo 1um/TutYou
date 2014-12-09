@@ -1,25 +1,36 @@
+replace_words()
+bindTY()
 
-function RemoveTT() {  
-    document.body.removeChild(document.getElementById('ns_tt'))  
-}
-
-function bindTY(){
-	elems = document.getElementsByClassName('tutyou')
+function replace_words(){
+	elems = $('tutyou')
+	template = $('.TYword ')
 	for(var i = 0; i < elems.length; i++) {
         var elem = elems[i];
+        clone = template.clone()
+        clone.find('.TYreplacement').html(elem.dataset.replacement)
+        clone.find('.TYoriginal').html(elem.dataset.original)
+        $(elem).replaceWith(clone)
+    }	
+}
+
+
+function bindTY(){
+	elems = document.getElementsByClassName('TYreplacement')
+	for(var i = 0; i < elems.length; i++) {
+        var elem = elems[i];
+
 		elem.onmouseover=function(){
 			window.mouseover = true
 			window.current_progress = 1;
-			window.current_elem = this;
+			window.current_elem = $(this).parents(".TYword")[0];
 			progress = function(){
 					if(mouseover){
 						if(current_progress<=10){
-						console.log(current_progress)
-						current_elem.dataset.percent=current_progress
+						current_elem.getElementsByClassName('TYprogress')[0].dataset.percent=current_progress
 						current_progress+=1
 						window.setTimeout(progress,100)
 						}else{
-							current_elem.getElementsByClassName('translation')[0].style.display="block";
+							current_elem.getElementsByClassName('TYoriginal')[0].style.display="block";
 						}	
 					}
 					
@@ -27,14 +38,14 @@ function bindTY(){
 
 			window.setTimeout(progress,100)
 		}
-		elem.onmouseleave = function(){
+		 $(elem).parents(".TYword")[0].onmouseleave = function(){
 			window.mouseover = false
-			this.dataset.percent=0
-			this.getElementsByClassName('translation')[0].style.display="none";
+			this.getElementsByClassName('TYprogress')[0].dataset.percent=0
+			this.getElementsByClassName('TYoriginal')[0].style.display="none";
 		}
 			
 	
 	}
     
 }
-bindTY()
+

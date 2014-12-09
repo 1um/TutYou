@@ -143,11 +143,8 @@ function replace_words(html, f){
           }else{
             ret_str = word.en_orig;
           }
-        
-          class_name = word.learned ? 'learned' : 'notlearned' 
 
-          return "<span class=\""+class_name+" tutyou\" data-percent='0'><span>"+ret_str+
-          "</span><span class='translation'>"+str+"</span></span>";
+          return "<tutyou data-replacement='"+ret_str+"' data-learned='"+word.learned+"' data-original='"+str+"' >"+str+"</tutyou>";
         }else{
           return str;
         }

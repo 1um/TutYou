@@ -19,15 +19,37 @@ function replaceWordsOnPage(f){
 }
 
 function append_code(){
-  var s = document.createElement('script');
-  s.src = chrome.extension.getURL('inject.js');
-  s.onload = function() {
-      this.parentNode.removeChild(this);
-  };
-  (document.head||document.documentElement).appendChild(s);
+  //upload templates
+  callAjax(chrome.extension.getURL('templates.html'), function(response){
+    //inject tempate
+    document.body.insertAdjacentHTML( 'afterend', response );
+    //inject scipt
+    var s = document.createElement('script');
+    s.src = chrome.extension.getURL('inject.js');
+    s.onload = function() {
+        this.parentNode.removeChild(this);
+    };
+    (document.head||document.documentElement).appendChild(s);
+
+  })
+  
+
+  
 }
 
 function log(text){
   console.log("TutYou:: "+text)
 }
 
+function callAjax(url, callback){
+    var xmlhttp;
+    // compatible with IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+            callback(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+}
