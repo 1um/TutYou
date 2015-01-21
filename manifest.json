@@ -20,17 +20,19 @@
     "content_scripts": [
         {
             "matches": [
-            "http://ithappens.me/*"
+            "http://ithappens.me/*",
+            "https://translate.google.com.ua/*"
             ],
-            "js": ["privateT.js"],
+            "js": ["privateT.js",
+                    "assets/findAndReplaceDOMText.js",
+                    "assets/Snowball.min.js"],
             "css": ["assets/tutYou.css"],
 			"run_at": "document_end"
         }
     ],
 	"background": {
 		"scripts": [
-		  "background.js",
-          "assets/Snowball.min.js"
+		  "background.js"
 		]
 	},
     "web_accessible_resources": ["inject.js","templates.html"]

@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(
     switch (request.command){
       case "get_ws":
         ws_from_db(function(ws){
-          sendResponse({ws: JSON.stringify(ws)});
+          sendResponse({ws: ws});
         })
         break;
       case "add_word":
@@ -26,11 +26,6 @@ chrome.runtime.onMessage.addListener(
       case "remove_word":
         remove_word(request.id,function(result){
           sendResponse(result);
-        });
-        break;
-      case "replace_words":
-        replace_words(request.html,function(html){
-          sendResponse({html:html});
         });
         break;
     }
@@ -126,38 +121,6 @@ function add_word_to_db(word,f){
   transaction.objectStore("words").add(word);
 }
 
-function replace_words(html, f){
-  
-  ws_from_db(function(ws){
-    updated_words = []
-    ws.words.forEach(function(word){
-      counter =0
-      html = html.replace(RegExp("[А-Яа-я]*"+word.ru_word+"[А-Яа-я]*", "gi"), function(str){
-        if (getPho(str.toLowerCase(),'russian').localeCompare(word.ru_word)==0){
-          counter+=1
-          ret_str = ""
-          if(str[0]=== str[0].toUpperCase()){
-            retval = word.en_orig;
-            retval = retval[0].toUpperCase()+retval.slice(1);
-            ret_str= retval;
-          }else{
-            ret_str = word.en_orig;
-          }
-
-          return "<tutyou data-replacement='"+ret_str+"' data-learned='"+word.learned+"' data-original='"+str+"' >"+str+"</tutyou>";
-        }else{
-          return str;
-        }
-      });
-      if(counter!=0){
-        word.counter+=counter;
-        updated_words.push(word)
-      }
-    })
-    update_words(updated_words)
-    f(html);
-  })
-}
 
 function update_words(words){
   window.current_words_update_index = 0
@@ -197,15 +160,7 @@ function remove_word(id,f){
   request.onsuccess = function(event) {
     f({status:"OK"})
   };
-}
-
-
-function getPho(word,lang){
-  var testStemmer = new Snowball(lang);
-  testStemmer.setCurrent(word);
-   testStemmer.stem();
-   return testStemmer.getCurrent();
-}
+} 
 
 
 function log(text){

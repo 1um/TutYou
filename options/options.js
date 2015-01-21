@@ -6,9 +6,9 @@ window.onload = function(){
 function loadWS(fun) {
   log('loading...');
   chrome.runtime.sendMessage({command: "get_ws"}, function(response) {
-    json_ws = response.ws
-    log('loaded -> '+json_ws.slice(0,30)+"...");
-    window.WS=JSON.parse(json_ws);
+    
+    log('loaded' );
+    window.WS=response.ws
     fun();
   });  
 }
@@ -25,6 +25,7 @@ function fill_words_list(){
         line.find('.id span').html(word.id)
         line.find('.ru-orig span').html(capitalise(word.ru_orig))
         line.find('.en-orig span').html(capitalise(word.en_orig))
+        debugger
         line.find('.date span').html(date_str(new Date(word.created_at)))
         line.find('.counter span').html(word.counter)
         if(word.learned){
