@@ -82,6 +82,61 @@ The content `<div>` is where all your content goes.
     color: #888;
 }
 
+.edit_word{
+    padding-top: 15px;
+}
+.edit_word input[type="text"]{
+    height: 20px;
+}
+
+.popup__overlay {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.7);
+    text-align: center;
+    margin-left: 80px;
+    }
+    .popup__overlay:after {
+        display: inline-block;
+        height: 100%;
+        width: 0;
+        vertical-align: middle;
+        content: ''
+    }
+.popup {
+    display: inline-block;
+    position: relative;
+    max-width: 80%;
+    padding: 20px;
+    border: 1px solid #fff;
+    background: #fff;
+    vertical-align: middle
+    }
+.popup__close {
+    display: block;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    padding: 8px;
+
+    cursor: pointer;
+
+    text-align: center;
+    font-size: 14px;
+    line-height: 14px;
+    color: #444;
+    text-decoration: none;
+    font-weight: bold;
+    }
+    .popup__close:hover {
+        background: #ddd
+    }
 
 /*
 The `#menu` `<div>` is the parent `<div>` that contains the `.pure-menu` that

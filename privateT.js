@@ -11,20 +11,15 @@ function main(){
 function replaceWordsOnPage(f){
   chrome.runtime.sendMessage({command: "get_ws"}, function(response) {
     log('get words to replace')
+
     response.ws.words.forEach(function(word){
       find_and_replace(word)
     });
+    log('words replaced')
+    f()
   });
-  log('words replaced')
-  f()
-  
 }
-function getPho(word,lang){
-  var testStemmer = new Snowball(lang);
-  testStemmer.setCurrent(word);
-   testStemmer.stem();
-   return testStemmer.getCurrent();
-}
+
 function find_and_replace(word){
   window.current_word = word
   window.current_count = 0
@@ -64,12 +59,15 @@ function find_and_replace(word){
 
 function append_code(){
   //upload templates
-  callAjax(chrome.extension.getURL('templates.html'), function(response){
+  callAjax(chrome.extension.getURL('inject/templates.html'), function(response){
     //inject tempate
+    response = response.replace('__STAR_ON_URL__',chrome.extension.getURL('assets/star-on.png'))
+    response = response.replace('__STAR_OFF_URL__',chrome.extension.getURL('assets/star-off.png'))
+
     document.body.insertAdjacentHTML( 'beforeend', response );
     //inject scipt
     var s = document.createElement('script');
-    s.src = chrome.extension.getURL('inject.js');
+    s.src = chrome.extension.getURL('inject/inject.js');
     s.onload = function() {
         this.parentNode.removeChild(this);
     };

@@ -27,7 +27,6 @@ window.onload = function(){
       if(response.status=="OK"){
         $(".result td").html("Слово добавленно!=)")
         window.setTimeout(function(){
-          debugger
           window.close();
         },550)
       }

@@ -12,29 +12,31 @@
         "tabs",
         "http://*/*",
 		"storage",
-        "background"
+        "background",
+        "contextMenus",
+        "notifications"
     ],
 	"icons": {
           "16": "assets/TY.png"
         },
     "content_scripts": [
         {
-            "matches": [
-            "http://ithappens.me/*",
-            "https://translate.google.com.ua/*"
-            ],
+            "matches": ["<all_urls>"],
+            
             "js": ["privateT.js",
                     "assets/findAndReplaceDOMText.js",
                     "assets/Snowball.min.js"],
-            "css": ["assets/tutYou.css"],
+            "css": ["inject/tutYou.css"],
 			"run_at": "document_end"
         }
     ],
 	"background": {
 		"scripts": [
-		  "background.js"
+		  "background.js",
+          "assets/Snowball.min.js",
+          "assets/translator.js"
 		]
 	},
-    "web_accessible_resources": ["inject.js","templates.html"]
+    "web_accessible_resources": ["inject/inject.js","inject/templates.html","assets/star-on.png","assets/star-off.png"]
 
 }

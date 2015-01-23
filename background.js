@@ -1,9 +1,19 @@
 ﻿const dbName = "TutYouDB";
+window.notification_tab={}
 load();
 function load(){
   log("Start load")
   load_or_create_db(function(){/*do nothing after load*/},1);
 }
+
+chrome.runtime.onInstalled.addListener(function() {
+  var context = "selection";
+  var title = "Добавить в TutYou";
+  var id = chrome.contextMenus.create({"title": title, "contexts":[context],
+                                         "id": "context" + context});  
+});
+chrome.contextMenus.onClicked.addListener(add_context_word);
+
 //interface
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -28,9 +38,15 @@ chrome.runtime.onMessage.addListener(
           sendResponse(result);
         });
         break;
+      case "get_word":
+        get_word(request.id,function(result){
+          sendResponse(result);
+        });
+        break;
+      
     }
       
-    return true //keep chanell openned!
+    return true //keep chanal openned!
   }
 );
 
@@ -108,21 +124,23 @@ function add_word_to_db(word,f){
   log('add word to DB...')
   var transaction = DB.transaction(["words"], "readwrite")
   
-  transaction.onerror = function(event) {
+  
+  request = transaction.objectStore("words").add(word);
+
+  request.onerror = function(event) {
     log("add word to DB error -> "+event.target.error.message)
     if(typeof(f)=="function") f({status:"ERROR",error:event.target.error});
     
   };
-  transaction.oncomplete = function(){
+
+  request.onsuccess = function(event){
     log('add word to DB was success!')
-    if(typeof(f)=="function") f({status:"OK",word:word});
-  };
-  
-  transaction.objectStore("words").add(word);
+    if(typeof(f)=="function") f({status:"OK",word:word, id:event.target.result});
+  }
 }
 
 
-function update_words(words){
+function update_word_sync(word){
   window.current_words_update_index = 0
   window.current_words_update_index_max = words.length-1
   window.words_update_function  = function(){
@@ -138,12 +156,12 @@ function update_word(word_keys, f){
   db_word_request = os.get(word_keys.id)
   window.word_keys = word_keys//bad passing variable
   window.f_callback = f//TODO fixit
-  db_word_request.onsuccess = function(){
-    orig = db_word_request.result
+  db_word_request.onsuccess = function(event){
+    orig = event.target.result
     var merged = {};
     for (var attrname in orig) { merged[attrname] = orig[attrname]; }
     for (var attrname in word_keys) { merged[attrname] = word_keys[attrname]; }
-    
+    os =DB.transaction(["words"], "readwrite").objectStore("words")
     var updateTitleRequest = os.put(merged);
     updateTitleRequest.onsuccess = function() {
       f_callback({status:"OK"})
@@ -162,9 +180,46 @@ function remove_word(id,f){
   };
 } 
 
+function get_word(id,f){
+  var request = DB.transaction(["words"], "readwrite")
+                .objectStore("words")
+                .get(id);
+  request.onsuccess = function(event) {
+    f({status:"OK",word:request.result})
+  };
+  request.onerror = function(event){
+    f({status:"ERROR"})
+  }
+}
 
 function log(text){
   console.log("TutYou:: "+text)
 }
 
+function add_context_word(info,tab){
+   var sText = info.selectionText;
+   translate(sText, function(word){
+    add_raw_word(word, function(result){
+      word = result.word
+      id = result.id
+      options = {type:'basic',
+              iconUrl:'../assets/TutYou4.png',
+              title:'Слово добавлено!',
+              message: word.ru_orig+" - "+word.en_orig,
+              buttons:[{title:'Изменить', iconUrl:'../assets/edit.png'},{title:'Отменить', iconUrl:'../assets/delete.png'}]}
+      notification_tab[id]=tab.id
+      chrome.notifications.create(id.toString(), options, function f(id){ /*nothing*/})
+    });
+   });
+   
+}
+
+chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex){
+  if(buttonIndex==0){//изменить
+    var newURL = chrome.extension.getURL('options/options.html');
+    chrome.tabs.create({ url: newURL+'?edit='+notificationId+'&tab='+notification_tab[+notificationId] });
+  }else{//отменить
+    remove_word(+notificationId,function(){/*nothing*/})
+  }
+});
 

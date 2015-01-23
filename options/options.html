@@ -40,22 +40,38 @@
               <div class="pure-u-1-24"> # </div>
               <div class="pure-u-1-4"> Слово </div>
               <div class="pure-u-1-4"> Перевод </div>
-              <div class="pure-u-5-24"> Дата добавления </div>
+              <div class="pure-u-4-24"> Дата добавления </div>
               <div class="pure-u-1-12"> Счетчик </div>
               <div class="pure-u-1-12"> Выучено </div>
-              <div class="pure-u-1-12"> Удалить </div>
+              <div class="pure-u-2-24"> Изменить </div>
+              <div class="pure-u-1-24"> Удалить </div>
             </div>
             <div class="pure-g words-table template">
               <div class="pure-u-1-24 id"> <span>1</span> </div>
               <div class="pure-u-1-4 ru-orig"> <span>1</span> </div>
               <div class="pure-u-1-4 en-orig"> <span>2</span> </div>
-              <div class="pure-u-5-24 date">  <span>3</span> </div>
+              <div class="pure-u-4-24 date">  <span>3</span> </div>
               <div class="pure-u-1-12 counter"> <span>4</span> </div>
               <div class="pure-u-1-12 learn-state"> <img src='../assets/star-on.png' class='learned'> <img src='../assets/star-off.png' class='not-learned'>  </div>
-              <div class="pure-u-1-12 remove"> <img src='../assets/delete.png'>  </div>
+              <div class="pure-u-2-24 edit"> <img src='../assets/edit.png'>  </div>
+              <div class="pure-u-1-24 remove"> <img src='../assets/delete.png'>  </div>
             </div>
           </div>
           
+
+          <div class="popup__overlay">
+            <div class="edit popup">
+              <a href="#" class="popup__close">X</a>
+              <form class='edit_word'>
+                <input class="id" type="hidden"></input>
+                <input class="close_and_move" type="hidden" value=''></input>
+                <input class="ru_f word" type="text" placeholder='Слово'></input>
+                <input class="en_f word" type="text" placeholder='Перевод'></input>
+                <input type="submit" class="pure-button submit-edit" value="Изменить"/>
+              </form>
+          
+            </div>
+          </div>
 
             
 
