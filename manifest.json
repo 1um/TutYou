@@ -38,5 +38,4 @@
 		]
 	},
     "web_accessible_resources": ["inject/inject.js","inject/templates.html","assets/star-on.png","assets/star-off.png"]
-
 }

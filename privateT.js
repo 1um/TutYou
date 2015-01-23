@@ -28,7 +28,7 @@ function find_and_replace(word){
     replace: function(portion, match){
       str = portion.text
       word = window.current_word
-      if (getPho(str.toLowerCase(),'russian').localeCompare(word.ru_word)!=0){
+      if (getPho(str.toLowerCase(),'russian').localeCompare(word.ru_word)!=0||word.learned){
         return str;
       }else{
         ret_str = ""
@@ -43,6 +43,7 @@ function find_and_replace(word){
         elem.dataset.replacement = ret_str;
         elem.dataset.learned = word.learned;
         elem.dataset.original = str;
+        elem.dataset.word_id = word.id;
         elem.innerHTML = str;
         window.current_count+=1
         return elem;
@@ -65,19 +66,27 @@ function append_code(){
     response = response.replace('__STAR_OFF_URL__',chrome.extension.getURL('assets/star-off.png'))
 
     document.body.insertAdjacentHTML( 'beforeend', response );
+
     //inject scipt
     var s = document.createElement('script');
     s.src = chrome.extension.getURL('inject/inject.js');
     s.onload = function() {
         this.parentNode.removeChild(this);
     };
-    (document.head||document.documentElement).appendChild(s);
-
+    (document.head||document.documentElement).appendChild(s);    
   })
   
-
-  
 }
+
+window.addEventListener('message', function(event) {
+    data = event.data
+    if(data.type == 'TYlearned'){
+      chrome.runtime.sendMessage({command: "update_word",word: JSON.stringify({id:data.word_id, learned:data.learned})}, function(response) {
+        window.postMessage({ type: 'TYlearned-updated'},window.location)
+      });
+    }
+});
+
 
 function log(text){
   console.log("TutYou:: "+text)
