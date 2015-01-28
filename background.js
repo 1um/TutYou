@@ -3,7 +3,7 @@ window.notification_tab={}
 load();
 function load(){
   log("Start load")
-  load_or_create_db(function(){/*do nothing after load*/},1);
+  load_or_create_db(function(){/*do nothing after load*/},2);
 }
 
 chrome.runtime.onInstalled.addListener(function() {
@@ -43,6 +43,23 @@ chrome.runtime.onMessage.addListener(
           sendResponse(result);
         });
         break;
+      case "add_to_black_list":{
+        add_to_black_list(request.url,function(result){
+          sendResponse(result);
+        });
+        break;
+      }
+      case "remove_from_black_list":{
+        remove_from_black_list(request.url,function(result){
+          sendResponse(result);
+        });
+        break;
+      }
+      case "find_in_black_list":{
+        find_in_black_list(request.url,function(result){
+          sendResponse(result);
+        });
+      }
       
     }
       
@@ -79,34 +96,53 @@ function load_or_create_db(f,ver){
     window.DB = request.result
   };
   request.onupgradeneeded = function(event) {
-    if(event.oldVersion==0){
-      log("create db");
-      var db = event.target.result;
-      var objectStore = db.createObjectStore("words", { keyPath: "id", autoIncrement: true });
-      objectStore.createIndex("id", "id", { unique: true });
-      objectStore.createIndex("ru_word", "ru_word");
-      objectStore.createIndex("en_word", "en_word");
-      load_or_create_db(f,ver);  
-    }else{
-      log("update");
+    var db = event.target.result;
+    for(migration = event.oldVersion+1; migration<=ver; migration++){
+      switch (migration){
+        case 1: //from not exist to 1 ver
+          var objectStore = db.createObjectStore("words", { keyPath: "id", autoIncrement: true });
+          objectStore.createIndex("id", "id", { unique: true });
+          objectStore.createIndex("ru_word", "ru_word");
+          objectStore.createIndex("en_word", "en_word");
+          break;
+        case 2: // from 1 ver to 2nd
+          var objectStore = db.createObjectStore("black_list", { keyPath: "id", autoIncrement: true });
+          objectStore.createIndex("id", "id", { unique: true });
+          objectStore.createIndex("host", "host", { unique: true });
+          break;
+      }
     }
+    load_or_create_db(f,ver);
   };
 }
 
 function ws_from_db(callback){
   log('extract ws from db');
   while(typeof(DB)=="undefined") log('Wait DB appear...')
-  var objectStore = DB.transaction(["words"]).objectStore("words");
-  ws = {words:[],version:DB.version}
-  objectStore.openCursor().onsuccess = function(event) {
+  var objectStoreWords = DB.transaction(["words"]).objectStore("words");
+  ws = {words:[],version:DB.version, black_list:[]}
+
+  objectStoreWords.openCursor().onsuccess = function(event) {
     var cursor = event.target.result;
     if (cursor) {
       ws.words.push(cursor.value)
       cursor.continue();
     }else{
-      callback(ws)
+      var objectStoreBlackList = DB.transaction(["black_list"]).objectStore("black_list");
+      objectStoreBlackList.openCursor().onsuccess = function(event) {
+        var cursor = event.target.result;
+        if (cursor) {
+          ws.black_list.push(cursor.value)
+          cursor.continue();
+        }else{
+          callback(ws)
+        }
+      };
     }
+
   };
+
+  
 }
 
 function add_raw_word(word,f){
@@ -223,3 +259,62 @@ chrome.notifications.onButtonClicked.addListener(function(notificationId, button
   }
 });
 
+
+function add_to_black_list(url,f){
+  log('add site to DB...')
+  
+  var transaction = DB.transaction(["black_list"], "readwrite")
+  host = new URL(url).hostname
+  site = {original_url:url, host: host}
+  request = transaction.objectStore("black_list").add(site);
+
+  request.onerror = function(event) {
+    log("add site to DB error -> "+event.target.error.message)
+    if(typeof(f)=="function") f({status:"ERROR",error:event.target.error});
+    
+  };
+
+  request.onsuccess = function(event){
+    log('add site to DB was success!')
+    if(typeof(f)=="function") f({status:"OK",site:site, id:event.target.result});
+  }
+
+}
+
+function remove_from_black_list(url,f){
+  log('remove site from DB...')
+  host = new URL(url).hostname
+  objectStore = DB.transaction(["black_list"], "readwrite").objectStore("black_list")
+  var index = objectStore.index("host");
+  index.get(host).onsuccess = function(event) {
+    if(typeof(event.target.result)=='undefined'){
+      f({status:"ERROR", error:'not find'})
+    }else{
+      id = event.target.result.id
+      var request = objectStore.delete(id);
+      request.onsuccess = function(event) {
+        log('remove site from DB was success!')
+        f({status:"OK"})
+      };  
+      request.onerror = function(event){
+        f({status:"OK"})
+      };
+    }
+    
+  };
+}
+
+function find_in_black_list(url,f){
+  log('find site in DB...')
+  host = new URL(url).hostname
+  objectStore = DB.transaction(["black_list"], "readwrite").objectStore("black_list")
+  var index = objectStore.index("host");
+  index.get(host).onsuccess = function(event) {
+    if(typeof(event.target.result)=='undefined'){
+      f({status:"ERROR", error:'not find'})
+    }else{
+      log('find site in DB was success!')
+      f({status:"OK"})
+    }
+  }
+}

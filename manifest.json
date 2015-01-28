@@ -1,9 +1,10 @@
 {
-    "name": "privateTutor",
-    "version": "1.0",
+    "name": "TutYou - Demo",
+    "version": "0.0.0.2",
     "manifest_version": 2,
-    "description": "Tutor for language learning",
-	"options_page": "options/options.html",
+    "description": "Увеличить словарный запас (для ленивых). Заменяет русские слова на английские во время серфинга",
+    "options_page": "options/options.html",
+    "author":"h4",
     "browser_action": {
         "default_icon": "assets/TY.png",
         "default_popup": "popup/popup.html"
@@ -11,12 +12,12 @@
     "permissions": [
         "tabs",
         "http://*/*",
-		"storage",
+        "storage",
         "background",
         "contextMenus",
         "notifications"
     ],
-	"icons": {
+    "icons": {
           "16": "assets/TY.png"
         },
     "content_scripts": [
@@ -27,15 +28,15 @@
                     "assets/findAndReplaceDOMText.js",
                     "assets/Snowball.min.js"],
             "css": ["inject/tutYou.css"],
-			"run_at": "document_end"
+            "run_at": "document_end"
         }
     ],
-	"background": {
-		"scripts": [
-		  "background.js",
+    "background": {
+        "scripts": [
+          "background.js",
           "assets/Snowball.min.js",
           "assets/translator.js"
-		]
-	},
+        ]
+    },
     "web_accessible_resources": ["inject/inject.js","inject/templates.html","assets/star-on.png","assets/star-off.png"]
 }

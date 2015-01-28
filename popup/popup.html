@@ -9,7 +9,7 @@
     <style>
       input{
         width: 300px;
-        margin: 10px;
+        margin: 3px 10px;
         height: 30px;
         font-size: 18px;
       }
@@ -42,15 +42,45 @@
         vertical-align: middle;
         font-size: 17px;
       }
+
+      .adding{
+        
+      }
+      .buttons td{
+        width: 33%
+      }
+      .buttons{
+        border-bottom: 1px solid rgb(208, 196, 196);
+      }
+      .buttons img{
+        margin-top: 3px;
+        height: 20px;
+      }
+      .hidden{
+        display: none;
+      }
     </style>
     
   </head>
 <body>
-  <form class='add_word'>
-    <input class="ru_f word" type="text" placeholder='Слово'></input>
-    <input class="en_f word" type="text" placeholder='Перевод'></input>
-    <input type="submit" class="pure-button submit pure-button-disabled" value="Добавить"/>
-  </form>
+  <table class='all'>
+    <tr class='buttons'><td class='help'>
+      <div class='link' data-href='../options/help.html'><img src='../assets/help.png'/></div>
+    </td><td class='settings'>
+      <div class='link' data-href='../options/options.html'><img src='../assets/book_black.png'/></div>
+    </td><td class='disable'>
+      <img src='../assets/eye.png' class='open'/>
+      <img src='../assets/eye-close.png' class='closen hidden'/>
+    </td></tr>
+    <tr class="adding"><td colspan="3">
+      <form class='add_word'>
+        <input class="ru_f word" type="text" placeholder='Слово'></input>
+        <input class="en_f word" type="text" placeholder='Перевод'></input>
+        <input type="submit" class="pure-button submit pure-button-disabled" value="Добавить"/>
+      </form>
+    </td></tr>
+    
+  </table>
   <div class='result ok'>
     <table><tr><td>
     </td></tr></table>

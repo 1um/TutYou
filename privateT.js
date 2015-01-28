@@ -1,4 +1,4 @@
-﻿window.onload = function(){
+window.onload = function(){
   log('start');
   main();
 }
@@ -11,12 +11,26 @@ function main(){
 function replaceWordsOnPage(f){
   chrome.runtime.sendMessage({command: "get_ws"}, function(response) {
     log('get words to replace')
-
-    response.ws.words.forEach(function(word){
-      find_and_replace(word)
-    });
-    log('words replaced')
-    f()
+    host = new URL(document.URL).host
+    black_list = response.ws.black_list
+    blocked = false;
+    for(i=0;i<black_list.length;i++){
+      site = black_list[i]
+      if(site.host==host){
+        blocked=true;
+      }
+    }
+    if(blocked){
+      log('words not replaced - blocked')
+    }else{
+      response.ws.words.forEach(function(word){
+        find_and_replace(word)
+      });  
+      log('words replaced')
+    }
+    f();
+    
+    
   });
 }
 
@@ -24,7 +38,7 @@ function find_and_replace(word){
   window.current_word = word
   window.current_count = 0
   findAndReplaceDOMText(document.body, {
-    find: RegExp("[А-Яа-я]*"+word.ru_word+"[А-Яа-я]*", "gi"),
+    find: RegExp("[^\\s<>0-9]*"+word.ru_word+"[^\\s<>0-9]*", "gi"), // !! cyrilic utf8 A-Яа-яЁё != cp1251 A-Яа-яЁё
     replace: function(portion, match){
       str = portion.text
       word = window.current_word

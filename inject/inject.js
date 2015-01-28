@@ -33,7 +33,7 @@ function bindTY(){
             if(current_progress<=10){
               current_elem.getElementsByClassName('TYprogress')[0].dataset.percent=current_progress
               current_progress+=1
-              window.setTimeout(progress,100)
+              window.setTimeout(progress,10)
             }else{
               replacement = current_elem.getElementsByClassName('TYreplacement')[0]
               
@@ -52,12 +52,33 @@ function bindTY(){
               }
               
               template.style.display="table";
-              template.style.position = "absolute";template.style.left = position.left-(template.offsetWidth-replacement.offsetWidth)/2+'px';
-              template.style.top = position.top+replacement.offsetHeight+'px';
+              template.style.position = "absolute";
+              template.style.left = position.left-(template.offsetWidth-replacement.offsetWidth)/2+'px';
+              template.style.top = position.top-template.offsetHeight+'px';
 
               rebind_star(function(learned){
                 replacement.dataset.learned = learned
               })
+            } 
+          }
+          
+        }
+
+      window.setTimeout(progress,100)
+    }
+    elem.onmouseleave=function(){
+      window.mouseover = false
+      window.current_progress = 10;
+
+      window.current_elem = this.parentNode.parentNode;
+      progress = function(){
+          if(!mouseover){
+            if(current_progress>=0){
+              current_elem.getElementsByClassName('TYprogress')[0].dataset.percent=current_progress
+              current_progress-=1
+              window.setTimeout(progress,10)
+            }else{
+              document.getElementsByClassName('TYoriginal')[0].style.display="none";
             } 
           }
           
@@ -73,9 +94,14 @@ function bindTY(){
   }
     
 }
-document.getElementsByClassName('TYoriginal')[0].onclick = function(){
+
+document.getElementsByClassName('TYoriginal')[0].onmouseover = function(e){
+  window.mouseover = true
+}
+document.getElementsByClassName('TYoriginal')[0].onmouseleave = function(e){
   this.style.display="none";
 }
+
 function rebind_star(f){
   star_on = document.getElementsByClassName('TYlearn')[0]
   star_off = document.getElementsByClassName('TYnotlearn')[0]

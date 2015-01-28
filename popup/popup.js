@@ -38,4 +38,50 @@ window.onload = function(){
     return false;
   });
 
+  $('body').on('click', 'div.link', function(){
+     chrome.tabs.create({url: $(this).data('href')});
+     return false;
+  });
+
+
+  chrome.tabs.query({active:true,currentWindow: true},function(tabs){
+        url = tabs[0].url
+    chrome.runtime.sendMessage({command: "find_in_black_list", url: url}, function(response) {
+      if(response.status=="OK"){
+        $('.open').addClass('hidden');
+        $('.closen').removeClass('hidden')
+      }else{
+        $('.closen').addClass('hidden');
+        $('.open').removeClass('hidden')
+      }
+    });
+  });
+
+  
+  $('.disable img').on('click',function(){
+    if(this.classList.contains("open")){
+      //disable this site
+      chrome.tabs.query({active:true,currentWindow: true},function(tabs){
+        url = tabs[0].url
+        chrome.runtime.sendMessage({command: "add_to_black_list", url: url}, function(response) {
+          if(response.status=="OK"){
+            $('.open').addClass('hidden');
+            $('.closen').removeClass('hidden')
+          }
+        });  
+      });
+    }else{
+      //enable this site
+      chrome.tabs.query({active:true,currentWindow: true},function(tabs){
+        url = tabs[0].url
+        chrome.runtime.sendMessage({command: "remove_from_black_list", url: url}, function(response) {
+          if(response.status=="OK"){
+            $('.closen').addClass('hidden');
+            $('.open').removeClass('hidden')
+          }
+        });  
+      });
+    }
+  });
+
 }
