@@ -137,7 +137,20 @@ The content `<div>` is where all your content goes.
     .popup__close:hover {
         background: #ddd
     }
-
+.add_word_help{
+    width: 100%;
+    margin-bottom: 40px;
+}
+.add_word_help td{
+    width: 50%;
+}
+.add_word_help img{
+    width: 100%;
+}
+.add_word_help td{
+    padding: 10px;
+    vertical-align: top;
+}
 /*
 The `#menu` `<div>` is the parent `<div>` that contains the `.pure-menu` that
 appears on the left side of the page.

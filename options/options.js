@@ -45,8 +45,6 @@ function fill_words_list(){
     line.find('.id span').html(word.id)
     line.find('.ru-orig span').html(capitalise(word.ru_orig))
     line.find('.en-orig span').html(capitalise(word.en_orig))
-
-    line.find('.date span').html(date_str(new Date(word.created_at)))
     line.find('.counter span').html(word.counter)
     if(word.learned){
       line.find('.learn-state .not-learned').hide()

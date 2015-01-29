@@ -1,1 +1,115 @@
-fdsd
+<!DOCTYPE html>
+<html>
+<head><title>TutYou</title>
+<meta charset="utf-8"> 
+<link rel="stylesheet" type="text/css" href="options.css">
+<link rel="stylesheet" type="text/css" href="../assets/pure-min.css">
+<script src="../assets/jquery.js"></script>
+</head>
+<body>
+  <div id="layout">
+    <!-- Menu toggle -->
+    <a href="http://purecss.io/layouts/side-menu/#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+        <div class="pure-menu pure-menu-open">
+            <a class="pure-menu-heading" href="#"><img src="../assets/TutYou3.png" width="65px"></img></a>
+
+            <ul>
+                <li><a href="options.html"><img src="../assets/book.png" ></img></a></li>
+                <!-- <li><a href="#"><img src="../assets/settings.png" ></img></a></li> -->
+
+                <li class="menu-item-divided pure-menu-selected"> <a href="help.html"><img src="../assets/help.png" ></img></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="header">
+            <h1>Справка</h1>
+            <h2>Как добавить слова в словарик? Как отметить слово выученным? Как отключить расширение на некоторых сайтах?</h2>
+        </div>
+
+        <div class="content">
+          <h3> Как добавить слово? </h3>
+          <hr>
+          <table class='add_word_help'>
+          	<thead>
+	          	<tr><td>
+	          		<h4>Из текста</h4>
+	          	</td><td>
+	          		<h4>Вручную</h4>
+	          	</td></tr>
+	         </thead>
+          	<tr><td>
+          		Выделите слово на странице, которое хотите добавить и нажмите правую кнопку мыши.
+          		<img src='../assets/screenshots/add_word_2.png'>
+          		В выпавшем меню нажимите на "Добавить в TutYou".
+          		Слово автоматически добавится вам в словарь:
+          		<img src='../assets/screenshots/add_word_3.png'>
+          		Если вам не нравится автоматический перевод - нажмите кнопку "Изменить".
+          		Если вам не хочется добавлять это слово - нажмите кнопку "Отменить".
+          		Обновите страницу, что бы увидеть изменения.
+          	</td><td>
+          		Нажмите на значок TutYou на верхней панели.
+          		<img src='../assets/screenshots/add_word_1.png'>
+          		Введите слово и перевод, затем нажмите добавить.
+          		Обновите страницу, что бы увидеть изменения.
+          	</td></tr>
+          </table>
+          <h3> Как увидеть добавленные слова? </h3>
+          <hr>
+          <table class='add_word_help'>
+          	<thead>
+	          	<tr><td>
+	          		<h4>В тексте</h4>
+	          	</td><td>
+	          		<h4>В словарике</h4>
+	          	</td></tr>
+	         </thead>
+          	<tr><td>
+          		Добавленные слова в тексте выделены жирным кеглем:
+          		<img src='../assets/screenshots/words_in_text.png'>
+          		При наведении на переведенное слово, можно увидеть оригинальное:
+          		<img src='../assets/screenshots/word_on_hover.png'>
+          	</td><td>
+          		Нажмите на значок TutYou на верхней панели.
+          		<img src='../assets/screenshots/add_word_1.png'>
+          		Затем на ярлык-книжечку, что бы попасть в словарик:
+          		<img src='../assets/screenshots/vocabluary_small.png'>
+          	</td></tr>
+          </table>
+          <h3> Как отключить перевод? </h3>
+          <hr>
+          <table class='add_word_help'>
+          	<thead>
+	          	<tr><td>
+	          		<h4>Одного слова на всех сайтах</h4>
+	          	</td><td>
+	          		<h4>Всех слов на одном сайте</h4>
+	          	</td></tr>
+	         </thead>
+          	<tr><td>
+          		Если вы уже выучили слово, и не хотите, что бы оно повлялось - 
+          		наведите на слово и нажмите звездочку:
+          		<img src='../assets/screenshots/word_stared.png'>
+          		Обновите страницу, что бы увидеть изменения.<br>
+          		Также вы можете удалить слово из словарика:
+          		<img src='../assets/screenshots/vocabluary_small.png'>
+          	</td><td>
+          		Нажмите на значок TutYou на верхней панели.
+          		<img src='../assets/screenshots/add_word_1.png'>
+          		Затем на ярлык-глазик. На всех страницах этого сайта слова больше не будут переводиться.
+          	</td></tr>
+          </table>
+            
+        </div>
+    </div>
+</div>
+
+<script src="options.js"></script>
+</body>
+</html>
