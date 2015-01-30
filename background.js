@@ -240,8 +240,8 @@ function add_context_word(info,tab){
       id = result.id
       options = {type:'basic',
               iconUrl:'../assets/TutYou4.png',
-              title:'Слово добавлено!',
-              message: word.ru_orig+" - "+word.en_orig+" (Переведено сервисом «Яндекс.Перевод»)",
+              title:word.ru_orig+" - "+word.en_orig,
+              message:  "Слово добавлено!(Переведено сервисом «Яндекс.Перевод»)",
               buttons:[{title:'Изменить', iconUrl:'../assets/edit.png'},{title:'Отменить', iconUrl:'../assets/delete.png'}]}
       notification_tab[id]=tab.id
       chrome.notifications.create(id.toString(), options, function f(id){ /*nothing*/})
