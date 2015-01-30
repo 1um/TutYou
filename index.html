@@ -26,6 +26,7 @@
       -webkit-font-smoothing: antialiased;
     }
     
+
     .wrapper {
       height: 100% !important;
       height: 100%;
@@ -214,10 +215,17 @@
     <iframe frameborder="0" id='prezi' name='prezi' webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""  src="http://prezi.com/embed/fp6pwfre-fxn/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0#"></iframe>
 </div>
     <script>
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf("MSIE ");
+
+      if(msie){
+        alert('Sorry! IE not supported. Use Chrome, Mozilla, Safari or Opera.')
+      }
+
       onePageScroll(".main", {
         sectionContainer: "section",
         easing: "ease-in-out",
-        responsiveFallback: false,
+        updateURL: false,  
         afterMove: function(index) {
           if(index=="2"){
             document.getElementsByClassName('logo-prezi')[0].style.display = 'none'
