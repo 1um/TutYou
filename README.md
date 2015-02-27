@@ -3,7 +3,7 @@ TutYou
 
 Plugin for Chrome to learn new words
 
-Landing Page - http://bit.do/tutyou
+Landing Page - http://1um.github.io/TutYou/
 
 Facebook - https://www.facebook.com/pages/TutYou/1736380799919616?fref=ts
 
